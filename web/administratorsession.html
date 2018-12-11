@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+<style>
+td {
+    height: 50px;
+    vertical-align: top;
+}
+html, body, {
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+table.fixed { table-layout:fixed; width:80%;}
+</style>
+</head>
+<body> <div id="wrapper">
+<center><h3>Hello Admin!<h/3> - <a target="_parent" href="http://202.94.83.190/~165314007/administrator.html">Keluar</a><br/><table class="fixed" style="width=80%;" border="0"><tr>
+		<td><center><h3>Tambah Klinik</h3><br/><form onsubmit="return tambahklinik(this);" method="POST">
+                	        ID Klinik : <br/><input style="width: 80%" type="text" id="idKlinik" value=""/>
+				<br/>
+                        	Nama : <br/><input style="width: 80%" type="text" id="namaklinik" value=""/>
+				<br/>
+				Spesialis : <br/><input style="width: 80%" type="text" id="spesialisklinik" value=""/>
+				<br/><br/>
+                                    <input type="submit" value="Tambah"/>
+                                    <pre id="klinikberhasil">
+                                    </pre>
+                        </form></center></td>
+		<td><center><h3>Tambah Antrian</h3><br/><form onsubmit="return make_json(this);" method="POST">
+                            No Rekam Medis &nbsp :  &nbsp <input type="text" style="width: 80%" id="nrm"/> <button type="button" onclick="loadAddAntrian()" id="btn">Cari</button>
+                                    <br/><br/><h3>Hasil Pencarian</h3><br/>
+                        Nama : <br/><input style="width: 80%" type="text" id="namaantrian" value="" disabled/>
+				<br/>
+				NIK : <br/><input style="width: 80%" type="text" id="nikantrian" value="" disabled/>
+				<br/>
+				Alamat : <br/><input style="width: 80%" type="text" id="alamatantrian" value="" disabled/>
+				<br/>
+				Tanggal Rawat : <br/><input style="width: 80%" type="Date" id="tanggalantrian" value=""/>
+				<br/>
+				Jenis Klinik : <br/><select name="namaKlinikantrian" style="width: 80%" id="namaKlinikantrian">
+                                                    <option style="color: black" label="--pilih klinik--"></option>
+                                                    <option style="color: black" label="anak">anak</option>
+                                                    <option style="color: black" label="mata">mata</option>
+                                                    <option style="color: black" label="gigi">gigi</option>
+                                                </select><br/><br/>
+                                    <input type="submit" value="Tambah"/>
+                                    <pre id="antrianberhasil">
+                                    </pre>
+                        </form></center></td>
+		<td><center><h3>Tambah Dokter</h3><br/><form onsubmit="return tambahdokter(this);" method="POST">
+                        NIK : <br/><input style="width: 80%" type="text" id="iddokter" value=""/>
+						<br/>
+                        Nama : <br/><input style="width: 80%" type="text" id="namadokter" value=""/>
+						<br/>
+						Spesialis : <br/><input style="width: 80%" type="text" id="spesialisdokter" value=""/>
+						<br/><br/>
+                                    <input type="submit" value="Tambah"/>
+                                    <pre id="dokterberhasil">
+                                    </pre>
+                        </form></center></td>
+</tr><tr>
+		<td><center><button type="button" onclick="loadKlinik()">Show Klinik</button><h3>Daftar Klinik</h3><div id="klinikoutput"></div></center></td>
+		<td><center><button type="button" onclick="loadDokter()">Show Dokter</button><h3>Daftar Dokter</h3><div id="dokteroutput"></div></div></center></td>
+		<td><center><button type="button" onclick="loadAntrian()">Show Antrian</button><h3>Daftar Antrian</h3><div id="antrianoutput"></div></div></center></td>
+			</tr></table>
+      </center>
+<script>
+    function loadKlinik() {
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://202.94.83.190:8080/165314007_rs/webresources/Klinik/getKlinik";
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                myFunction(this.responseText);
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+
+        function myFunction(response) {
+            var arr = JSON.parse(response);
+            var i;
+            var out = "<center><table><tr><td>Nomor</td><td>Nama</td><td>Spesialis</td>";
+
+            for (i = 0; i < arr.length; i++) {
+                out += "<tr><td>" +
+                        arr[i].idKlinik + "</td><td>" + arr[i].nama + "</td><td>" +
+                        arr[i].spesialis;
+
+            }
+            out += "</table></center>";
+            document.getElementById("klinikoutput").innerHTML = out;
+        }
+	}
+
+function loadDokter() {
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://202.94.83.190:8080/165314007_rs/webresources/Dokter/getDokter";
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                myFunction(this.responseText);
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        function myFunction(response) {
+            var arr = JSON.parse(response);
+            var i;
+            var out = "<center><table><tr><td>Nomor</td><td>Nama Dokter</td><td>Spesialis</td>";
+
+            for (i = 0; i < arr.length; i++) {
+                out += "<tr><td>" +
+                        arr[i].id + "</td><td>" + arr[i].nama + "</td><td>" +
+                        arr[i].spesialis;
+
+            }
+            out += "</table></center>";
+            document.getElementById("dokteroutput").innerHTML = out;
+        }
+    }
+function loadAntrian() {
+	var xmlhttp = new XMLHttpRequest();
+        var url = "http://202.94.83.190:8080/165314007_rs/webresources/Antrian/getAntrian";
+	xmlhttp.onreadystatechange = function () {
+                  if (this.readyState == 4 && this.status == 200) {
+                  myFunction(this.responseText);
+                                                }
+                                            }
+                                            xmlhttp.open("GET", url, true);
+                                            xmlhttp.send();
+
+                                            function myFunction(response) {
+                                                var arr = JSON.parse(response);
+                                                var i;
+                                                var out = "<center><table><tr><td>Id Antrian</td><td>NoRM</td><td>Nama Pasien</td><td>Tanggal Periksa</td><td>Nama Klinik</td><td>Alamat</td></tr>";
+
+                                                for (i = 0; i < arr.length; i++) {
+                                                    out += "<tr><td>" +
+                                                            arr[i].id +
+                                                            "</td><td>" +
+                                                            arr[i].noRm +
+                                                            "</td><td>" + arr[i].nama + "</td><td>" + arr[i].tanggal + "</td><td>" + arr[i].namaKlinik + "</td><td>" + arr[i].alamat +"</tr>";
+                                                }
+                                                out += "</table></center>";
+                                                document.getElementById("antrianoutput").innerHTML = out;
+
+}
+}
+ 
+
+                            function loadAddAntrian() {
+
+                                var url = "http://202.94.83.190:8080/165314007_rs/webresources/Pasien/cariPasien?noRm=" + nrm.value;
+                                var xhttp = new XMLHttpRequest();
+                                xhttp.open("GET", url, true);
+                                xhttp.send();
+                                xhttp.onreadystatechange = function () {
+                                    if (this.readyState == 4 && this.status == 200) {
+                                        var objj = JSON.parse(this.responseText);
+                                        document.getElementById("namaantrian").value = objj.nama;
+                                        document.getElementById("nikantrian").value = objj.nik;
+                                        document.getElementById("alamatantrian").value = objj.alamat;
+                                    }
+                                };
+                            }
+
+
+                            function make_json(form) {
+                                var json = {
+                       
+                                    "noRm": form.nikantrian.value,
+                                    "nama": form.namaantrian.value,
+									"tanggal": form.tanggalantrian.value,
+									"namaKlinik": form.namaKlinikantrian.value,
+                                    "alamat": form.alamatantrian.value
+                                   
+                                };
+                                var html = JSON.stringify(json, 0, 100);
+
+                                var Url = "http://202.94.83.190:8080/165314007_rs/webresources/Antrian/addAntrian";
+                                var xhr = new XMLHttpRequest();
+                                xhr.open('POST', Url, false);
+                                xhr.setRequestHeader("Content-type", "application/json");
+                                xhr.send(html);
+
+                                document.getElementById("antrianberhasil").innerHTML = "Penambahan Antrian Berhasil";
+                                return false;
+                            }
+		function tambahdokter(form) {
+                            var json = {
+								"id": form.iddokter.value,
+                                "nama": form.namadokter.value,
+                                "spesialis": form.spesialisdokter.value
+                            };
+                            var html = JSON.stringify(json, 0, 100);
+
+                            var Url = "http://202.94.83.190:8080/165314007_rs/webresources/Dokter/addDokter";
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('POST', Url, false);
+                            xhr.setRequestHeader("Content-type", "application/json");
+                            xhr.send(html);
+                            document.getElementById("dokterberhasil").innerHTML = "Penambahan Dokter Berhasil";
+                            return false;
+                        }
+function tambahklinik(form) {
+                            var json = {
+                                "idKlinik": form.idKlinik.value,
+                                "nama": form.namaklinik.value,
+                                "spesialis": form.spesialisklinik.value
+                            };
+                            var html = JSON.stringify(json, 0, 100);
+
+                            var Url = "http://202.94.83.190:8080/165314007_rs/webresources/Klinik/addKlinik";
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('POST', Url, false);
+                            xhr.setRequestHeader("Content-type", "application/json");
+                            xhr.send(html);
+
+                            document.getElementById("klinikberhasil").innerHTML = "Penambahan Klinik Berhasil";
+                            return false;
+                        }
+                     
+       </script></div>
+</body>
+</html>

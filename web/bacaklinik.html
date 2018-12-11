@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>RUMAHSEHAT Hospital</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/main.css">
+<style>
+td {
+    height: 50px;
+    vertical-align: top;
+}
+</style>
+</head>
+<body id="top">
+    <header class="s-header">
+
+        <div class="header-logo">
+        </div>
+
+        <nav class="header-nav">
+
+            <a href="#0" class="header-nav__close" title="close"><span>Close</span></a>
+
+            <div class="header-nav__content">
+                <h3>Navigation</h3>
+                
+                    <ul class="header-nav__list">
+
+                        <li><a href="http://202.94.83.190/~165314007" title="home">Home</a></li>
+
+                        <li><a href="http://202.94.83.190/~165314007/pencarian.html">Cari Pasien</a></li>
+
+                        <li><a href="http://202.94.83.190/~165314007/bacaklinik.html">Daftar Layanan</a></li>
+                        
+                        <li><a href="http://202.94.83.190/~165314007/registrasi.html">Registrasi</a></li>
+                        
+                        <li><a href="http://202.94.83.190/~165314007/#sectionxxx">Tentang Kami</a></li>
+
+                    </ul>
+                <p>RUMAHSEHAT Hospital. Jogja-Wonosari Street No 2013. Logandeng, Playen, South Mountain, YK<br/>+62 811 290 2953<br/>admin@widifirmaan.cf</p>
+                <ul class="header-nav__social">
+                    <li>
+                        <a href="http://fb.me/widifirmaan"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/1312w"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/widifirmaan"><i class="fa fa-instagram"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <a class="header-menu-toggle" href="#0">
+            <span class="header-menu-text">Menu</span>
+            <span class="header-menu-icon"></span>
+        </a>
+
+    </header>
+	    <section id='services' class="s-services">
+
+        <div class="row section-header has-bottom-sep" data-aos="fade-up">
+            <div class="col-full">
+                <h3 class="subhead">RUMAHSEHAT</h3>
+                <h1 class="display-2">Daftar Layanan/Klinik</h1>
+				
+			</div>
+		</div> <center><table style="width: 75%"><tr>
+		<td><center><button type="button" onclick="loadKlinik()">Klinik</button></center></td>
+		<td><center><button type="button" onclick="loadDokter()">Dokter</button></center></td>
+			</tr><tr>
+		<td><div id="tampil1"></div></td>
+		<td><div id="tampil2"></div></td></tr></table>
+        <script>
+    function loadKlinik() {
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://202.94.83.190:8080/165314007_rs/webresources/Klinik/getKlinik";
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                myFunction(this.responseText);
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+
+        function myFunction(response) {
+            var arr = JSON.parse(response);
+            var i;
+            var out = "<table><tr><td>Nomor</td><td>Nama</td><td>Spesialis</td>";
+
+            for (i = 0; i < arr.length; i++) {
+                out += "<tr><td>" +
+                        arr[i].idKlinik + "</td><td>" + arr[i].nama + "</td><td>" +
+                        arr[i].spesialis;
+
+            }
+            out += "</table>";
+            document.getElementById("tampil1").innerHTML = out;
+        }
+	}
+	function loadDokter() {
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://202.94.83.190:8080/165314007_rs/webresources/Dokter/getDokter";
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                myFunction(this.responseText);
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        function myFunction(response) {
+            var arr = JSON.parse(response);
+            var i;
+            var out = "<table><tr><td>Nomor</td><td>Nama Dokter</td><td>Spesialis</td>";
+
+            for (i = 0; i < arr.length; i++) {
+                out += "<tr><td>" +
+                        arr[i].id + "</td><td>" + arr[i].nama + "</td><td>" +
+                        arr[i].spesialis;
+
+            }
+            out += "</table>";
+            document.getElementById("tampil2").innerHTML = out;
+        }
+    }
+        </script></center>
+		<!-- end section-header -->
+    </section> <!-- end s-services -->
+    <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="images/hero-bg.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
+        <div class="overlay"></div>
+        <div class="shadow-overlay"></div>
+        <div class="home-content">
+            <div class="row home-content__main">
+                <h3>Selamat datang di RUMAHSEHAT</h3><br/><br/>
+
+            </div>
+            <div class="home-content__line"></div>
+        </div>
+        <ul class="home-social">
+            <li>
+                <a href="http://fb.me/widifirmaan"><i class="fa fa-facebook" aria-hidden="true"></i><span>Facebook</span></a>
+            </li>
+            <li>
+                <a href="https://twitter.com/1312w"><i class="fa fa-twitter" aria-hidden="true"></i><span>Twiiter</span></a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/widifirmaan"><i class="fa fa-instagram" aria-hidden="true"></i><span>Instagram</span></a>
+            </li>
+        </ul> 
+    </section>
+	<div aria-hidden="true" class="pswp" role="dialog" tabindex="-1">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button> <button class="pswp__button pswp__button--share" title=
+                    "Share"></button> <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button> <button class="pswp__button pswp__button--zoom" title=
+                    "Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button> <button class="pswp__button pswp__button--arrow--right" title=
+                "Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div id="preloader">
+        <div id="loader">
+            <div class="line-scale-pulse-out">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
